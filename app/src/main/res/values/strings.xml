@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">DanbiTests</string>
+    <string name="buttonToB">Confirm</string>
+    <string name="buttonToA">Button To A</string>
+    <string name="first_activity">First Activity</string>
+    <string name="second_activity">Second Activity</string>
+    <string name="personone"></string>
+    <string name="num"></string>
+    <string name="persontwo"></string>
+    <string name="pone">pOne</string>
+    <string name="inrec">inRec</string>
+    <string name="ptwo">pTwo</string>
+    <string name="number">num</string>
+    <string name="hash">Hash:</string>
+    <string name="tv_rec">tv_rec</string>
+
+</resources>
