@@ -42,18 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_below="@+id/num"
             android:layout_alignParentStart="true" android:id="@+id/hash"/>
-    <Button
-            android:text="@string/inrec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_below="@+id/goToB" android:layout_alignParentEnd="true"
-            android:onClick="recyclerButton"
-            android:id="@+id/inRec"/>
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="34dp" android:layout_below="@+id/hash" android:layout_alignParentStart="true"
-            android:id="@+id/rcv"/>
+            android:id="@+id/rcv" android:layout_below="@+id/hash" android:layout_alignParentStart="true"/>
 
 
 </RelativeLayout>

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,10 +21,22 @@ public class MainActivity extends AppCompatActivity {
     private EditText pNum;
     private TextView pHash;
     private RecyclerView recyclerView;
-    private String strOfHash;
+
+
+    private List<Transaction> mTransactions;
+
+    private void initializeData() {
+        mTransactions.add(new Transaction(pOne.getText().toString(), pTwo.getText().toString(), pNum.getText().toString(), pHash.getText().toString()));
+    }
+
+    private void initializeAdapter() {
+        RecyclerAdapter adapter = new RecyclerAdapter(mTransactions);
+        recyclerView.setAdapter(adapter);
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -33,17 +47,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.rcv);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-//        String[] myDataset = getDataSet();
-//        RecyclerView.Adapter adapter = new RecyclerAdapter(myDataset);
-//        recyclerView.setAdapter(adapter);
+        mTransactions = new ArrayList<>();
 
     }
 
-    private String[] getDataSet(String strOfHash) {
-        String[] mDataSet = new String[1];
-        mDataSet[0] = strOfHash;
-        return mDataSet;
-    }
 
     public void confirm(View view) throws NoSuchAlgorithmException {
         Context context = getApplicationContext();
@@ -53,24 +60,23 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (!pOne.getText().toString().equals("") || !pTwo.getText().toString().equals("") || !pNum.getText().toString().equals("")) {
-            strOfHash = pOne.getText().toString() + pTwo.getText().toString() + Integer.parseInt(pNum.getText().toString());
+            String strOfHash = pOne.getText().toString() + pTwo.getText().toString() + Integer.parseInt(pNum.getText().toString());
             HashCalc hc = new HashCalc();
             pHash.setText(hc.cryptMyString(strOfHash));
-            pOne.setText("");
-            pTwo.setText("");
-            pNum.setText("");
+            initializeData();
+            initializeAdapter();
+            RecyclerAdapter adapter = new RecyclerAdapter(mTransactions);
+            recyclerView.setAdapter(adapter);
+            clearFields();
         } else toastConfirm.show();
 
 
     }
 
-    public void recyclerButton(View view) {
-        if (!pOne.getText().toString().equals("") || !pTwo.getText().toString().equals("") || !pNum.getText().toString().equals("")) {
-            strOfHash = pOne.getText().toString() + pTwo.getText().toString() + Integer.parseInt(pNum.getText().toString());
-            String[] myDataset = getDataSet(strOfHash);
-            RecyclerView.Adapter adapter = new RecyclerAdapter(myDataset);
-            recyclerView.setAdapter(adapter);
-
-        }
+    private void clearFields() {
+        pOne.setText("");
+        pTwo.setText("");
+        pNum.setText("");
     }
+
 }

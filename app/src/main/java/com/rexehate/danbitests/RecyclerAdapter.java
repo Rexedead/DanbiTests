@@ -6,49 +6,59 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
-    private String[] mDataset;
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.PersonViewHolder> {
 
-    // класс view holder-а с помощью которого мы получаем ссылку на каждый элемент
-    // отдельного пункта списка
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        // наш пункт состоит только из одного TextView
-        TextView mTextView;
+    static class PersonViewHolder extends RecyclerView.ViewHolder {
 
-        ViewHolder(View v) {
-            super(v);
-            mTextView = (TextView) v.findViewById(R.id.tv_recycler_item);
+
+        TextView personOne;
+        TextView personTwo;
+        TextView personNum;
+        TextView transHash;
+
+
+
+        PersonViewHolder(View itemView) {
+            super(itemView);
+            personOne = (TextView)itemView.findViewById(R.id.person_one);
+            personTwo = (TextView)itemView.findViewById(R.id.person_two);
+            personNum = (TextView)itemView.findViewById(R.id.person_num);
+            transHash = (TextView)itemView.findViewById(R.id.trans_hash);
+
         }
     }
 
-    // Конструктор
-    RecyclerAdapter(String[] dataset) {
-        mDataset = dataset;
+    private List<Transaction> mTransactions;
+
+    RecyclerAdapter(List<Transaction> transactions){
+        this.mTransactions = transactions;
     }
 
-    // Создает новые views (вызывается layout manager-ом)
     @Override
-    public RecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
-        // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_item, parent, false);
-
-        return new ViewHolder(v);
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
-    // Заменяет контент отдельного view (вызывается layout manager-ом)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item, viewGroup, false);
+        return new PersonViewHolder(v);
+    }
 
-        holder.mTextView.setText(mDataset[position]);
+    @Override
+    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+        personViewHolder.personOne.setText(mTransactions.get(i).pOneT);
+        personViewHolder.personTwo.setText(mTransactions.get(i).pTwoT);
+        personViewHolder.personNum.setText(mTransactions.get(i).pTrans);
+        personViewHolder.transHash.setText(mTransactions.get(i).pHash);
 
     }
 
-    // Возвращает размер данных (вызывается layout manager-ом)
     @Override
     public int getItemCount() {
-        return mDataset.length;
+        return mTransactions.size();
     }
 }
